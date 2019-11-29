@@ -1,5 +1,5 @@
 {
-    "name": "magnxpyr/phalcon-datatables",
+    "name": "assadnazar/phalcon4-datatables",
     "description": "DataTables adapter for Phalcon Framework Version 4",
     "keywords": ["Phalcon", "DataTables", "Plugin"],
     "license": "MIT",
