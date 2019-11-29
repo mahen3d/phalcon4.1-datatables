@@ -7,6 +7,7 @@
 
 # About
 This is a [Phalcon Framework](http://phalconphp.com/) adapter for [DataTables](http://www.datatables.net/).
+This version contains community fixes and multi model search support
 # Support
 ### Currently supported
 * QueryBuilder interface
@@ -16,6 +17,7 @@ This is a [Phalcon Framework](http://phalconphp.com/) adapter for [DataTables](h
 * Ordering
 * Multiple column ordering
 * Column-based search
+* Multi model search
 
 # Installation
 ### Installation via Composer
@@ -25,7 +27,7 @@ This is a [Phalcon Framework](http://phalconphp.com/) adapter for [DataTables](h
 ```json
 {
     "require": {
-        "m1ome/phalcon-datatables": "1.*"
+        "magnxpyr/phalcon-datatables": "1.*"
     }
 }
 ```
@@ -91,6 +93,32 @@ class TestController extends \Phalcon\Mvc\Controller {
 }
 ```
 
+### Controller (using multi models):
+```php
+<?php
+use \DataTables\DataTable;
+
+class TestController extends \Phalcon\Mvc\Controller {
+    public function indexAction() {
+        if ($this->request->isAjax()) {
+          $builder = $this->modelsManager->createBuilder()
+                          ->columns('u.id, u.name, u.email, u.name as role_name')
+                          ->addFrom('Example\Models\User', 'u')
+                          ->addFrom('Example\Models\Role', 'r')
+                          ->where('u.role_id = r.id')
+           
+          $dataTables = new DataTable();
+          $dataTables->fromBuilder($builder)->sendResponse();
+          
+           // or pass an array of columns to the builder
+           $columns = ['u.id', 'u.name', 'u.email', ['u.name', 'alias' => 'role_name']];
+           $dataTables = new DataTable();
+           $dataTables->fromBuilder($builder, $columns)->sendResponse();
+        }
+    }
+}
+```
+
 ### Model:
 ```php
 <?php
@@ -99,8 +127,16 @@ class TestController extends \Phalcon\Mvc\Controller {
 * @property string name
 * @property string email
 * @property float balance
+* @property integer role_id
 */
 class User extends \Phalcon\Mvc\Model {
+}
+
+/**
+* @property integer id
+* @property string name
+*/
+class Role extends \Phalcon\Mvc\Model {
 }
 ```
 
