@@ -2,9 +2,7 @@
 
 namespace DataTables;
 
-use Phalcon\Mvc\User\Component;
-
-class ParamsParser extends Component
+class ParamsParser extends \Phalcon\Di\Injectable
 {
 
     protected $params = [];

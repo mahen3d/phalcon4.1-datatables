@@ -1,6 +1,6 @@
 {
     "name": "magnxpyr/phalcon-datatables",
-    "description": "DataTables adapter for Phalcon Framework",
+    "description": "DataTables adapter for Phalcon Framework Version 4",
     "keywords": ["Phalcon", "DataTables", "Plugin"],
     "license": "MIT",
     "autoload": {
@@ -10,17 +10,14 @@
     },
     "authors": [
       {
-        "name": "Pavel Makarenko",
-        "email": "cryfall@gmail.com"
-      },
-      {
-        "name": "Stefan Chiriac",
-        "email": "stefan@magnxpyr.com"
+        "name": "Assad Nazar",
+        "email": "assad.nazar@gmail.com"
       }
     ],
     "minimum-stability": "dev",
     "require": {
-
+		"php": ">=7.2",
+        "ext-phalcon": "~4.0.0-rc.1"
     },
     "extra": {
       "branch-alias": {
