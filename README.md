@@ -132,7 +132,7 @@ $(".exportBtn").on("click", function(e){
     // append params to url + export type (Excel/PDF)
     $(this).attr('href', _href + params + '/' + $(this).text());
     window.location.href = $(this).attr('href');
-})
+});
 ```
 
 ```php
@@ -140,7 +140,7 @@ $(".exportBtn").on("click", function(e){
 use \DataTables\DataTable;
 
 class TestController extends \Phalcon\Mvc\Controller {
-    public function exportAction($type) {
+    public function exportAction($filters, $type) {
           $builder = $this->modelsManager->createBuilder()
                           ->columns('id, name, email, balance')
                           ->from('Example\Models\User');
