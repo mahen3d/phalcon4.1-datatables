@@ -40,6 +40,75 @@ class DataTable extends \Phalcon\Di\Injectable
     {
         return !empty($this->response) ? $this->response : [];
     }
+    
+    public function exportResponse($type = 'Excel')
+    {
+        $data = $this->getResponse()['data'];
+
+        $headings = array();
+
+        foreach($data[0] as $key => $value)
+        {
+            $headings[$key] = $key;
+        }
+
+        array_unshift($data, $headings);
+
+        unset($headings);
+
+        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet->getActiveSheet()->fromArray($data, Null, 'A1');
+
+        $totalCols = $spreadsheet->getActiveSheet()->getHighestColumn();
+        $spreadsheet->getActiveSheet()->removeColumn($totalCols);
+
+        // Removed last column so re-calculate columns
+        $totalCols = $spreadsheet->getActiveSheet()->getHighestColumn();
+        $totalRows = $spreadsheet->getActiveSheet()->getHighestRow();
+
+        // Default Styles
+        $styleHeader = [
+            'font' => [
+                'bold' => true,
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+        ];
+        $styleCells = [
+
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                ],
+            ]
+        ];
+        $spreadsheet->getActiveSheet()->getStyle("A1:{$totalCols}1")->applyFromArray($styleHeader);
+        $spreadsheet->getActiveSheet()->getStyle("A1:{$totalCols}{$totalRows}")->applyFromArray($styleCells);
+
+        $fileName = "Export_" . date('m-d-Y');
+
+        switch ($type) {
+            case 'PDF':
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="'. $fileName .'.pdf"');
+                header('Cache-Control: max-age=0');
+
+                $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Mpdf');
+                $writer->save('php://output');
+                break;
+            case 'Excel':
+            default:
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment;filename="'. $fileName .'.xlsx"');
+                header('Cache-Control: max-age=0');
+
+                $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+                $writer->save('php://output');
+                break;
+        }
+    }
 
     public function sendResponse()
     {
