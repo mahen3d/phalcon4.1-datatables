@@ -18,6 +18,7 @@ This version contains community fixes and multi model search support
 * Multiple column ordering
 * Column-based search
 * Multi model search
+* Export to Excel and PDF
 
 # Installation
 ### Installation via Composer
@@ -27,7 +28,9 @@ This version contains community fixes and multi model search support
 ```json
 {
     "require": {
-        "assadnazar/phalcon4-datatables": "dev-master"
+        "assadnazar/phalcon4-datatables": "dev-master",
+        "phpoffice/phpspreadsheet": "1.11.0",
+        "mpdf/mpdf": "8.0.5"
     }
 }
 ```
@@ -115,6 +118,35 @@ class TestController extends \Phalcon\Mvc\Controller {
            $dataTables = new DataTable();
            $dataTables->fromBuilder($builder, $columns)->sendResponse();
         }
+    }
+}
+```
+
+### Export Feature (using QueryBuilder):
+```jquery
+$(".exportBtn").on("click", function(e){
+    e.preventDefault();
+    // Get ajax params
+    let params = $.param($('#tableID').DataTable().ajax.params());
+    let _href = $(this).attr('href');
+    // append params to url + export type (Excel/PDF)
+    $(this).attr('href', _href + params + '/' + $(this).text());
+    window.location.href = $(this).attr('href');
+})
+```
+
+```php
+<?php
+use \DataTables\DataTable;
+
+class TestController extends \Phalcon\Mvc\Controller {
+    public function exportAction($type) {
+          $builder = $this->modelsManager->createBuilder()
+                          ->columns('id, name, email, balance')
+                          ->from('Example\Models\User');
+
+          $dataTables = new DataTable();
+          $dataTables->fromBuilder($builder)->exportResponse($type);
     }
 }
 ```
