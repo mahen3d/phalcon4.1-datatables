@@ -16,8 +16,10 @@
     ],
     "minimum-stability": "dev",
     "require": {
-		"php": ">=7.2",
-        "ext-phalcon": "~4.0.0-rc.1"
+	"php": ">=7.2",
+        "ext-phalcon": "~4.0.0-rc.1",
+        "phpoffice/phpspreadsheet": "1.11.0",
+        "mpdf/mpdf": "8.0.5"
     },
     "extra": {
       "branch-alias": {
