@@ -60,11 +60,14 @@ class DataTable extends \Phalcon\Di\Injectable
         $spreadsheet->getActiveSheet()->fromArray($data, Null, 'A1');
 
         $totalCols = $spreadsheet->getActiveSheet()->getHighestColumn();
-        $spreadsheet->getActiveSheet()->removeColumn($totalCols);
-
-        // Removed last column so re-calculate columns
-        $totalCols = $spreadsheet->getActiveSheet()->getHighestColumn();
         $totalRows = $spreadsheet->getActiveSheet()->getHighestRow();
+        
+        // In Case we have 'DT_RowId' in our data, then remove last column and re-calculate columns
+        if(array_key_exists('DT_RowId', $data)
+        {
+            $spreadsheet->getActiveSheet()->removeColumn($totalCols);
+            $totalCols = $spreadsheet->getActiveSheet()->getHighestColumn();
+        }
 
         // Default Styles
         $styleHeader = [
