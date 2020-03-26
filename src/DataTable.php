@@ -63,7 +63,7 @@ class DataTable extends \Phalcon\Di\Injectable
         $totalRows = $spreadsheet->getActiveSheet()->getHighestRow();
         
         // In Case we have 'DT_RowId' in our data, then remove last column and re-calculate columns
-        if(array_key_exists('DT_RowId', $data))
+        if(array_key_exists('DT_RowId', $data[0]))
         {
             $spreadsheet->getActiveSheet()->removeColumn($totalCols);
             $totalCols = $spreadsheet->getActiveSheet()->getHighestColumn();
