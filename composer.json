@@ -1,5 +1,5 @@
 {
-    "name": "assadnazar/phalcon4-datatables",
+    "name": "easyconn/phalcon4-datatables",
     "description": "DataTables adapter for Phalcon Framework Version 4",
     "keywords": ["Phalcon", "DataTables", "Plugin"],
     "license": "MIT",
@@ -17,9 +17,7 @@
     "minimum-stability": "dev",
     "require": {
 	"php": ">=7.2",
-        "ext-phalcon": "~4.0.0-rc.1",
-        "phpoffice/phpspreadsheet": "1.11.0",
-        "mpdf/mpdf": "8.0.5"
+        "ext-phalcon": "~4.0.0-rc.1"
     },
     "extra": {
       "branch-alias": {
