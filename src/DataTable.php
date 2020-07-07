@@ -10,9 +10,9 @@ use Phalcon\Http\Response;
 class DataTable extends \Phalcon\Di\Injectable
 {
 
-    protected $options;
-    protected $params;
-    protected $response;
+    public $options;
+    public $params;
+    public $response;
 
     /**
      *
