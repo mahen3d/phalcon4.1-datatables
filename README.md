@@ -28,7 +28,7 @@ This version contains community fixes and multi model search support
 ```json
 {
     "require": {
-        "assadnazar/phalcon4-datatables": "dev-master",
+        "SP4IKE/phalcon4-datatables": "dev-master",
         "phpoffice/phpspreadsheet": "1.11.0",
         "mpdf/mpdf": "8.0.5"
     }
