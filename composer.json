@@ -1,6 +1,6 @@
 {
-    "name": "easyconn/phalcon4-datatables",
-    "description": "DataTables adapter for Phalcon Framework Version 4",
+    "name": "sp4ike/phalcon4.1-datatables",
+    "description": "DataTables adapter for Phalcon Framework Version 4.1",
     "keywords": ["Phalcon", "DataTables", "Plugin"],
     "license": "MIT",
     "autoload": {
@@ -10,8 +10,8 @@
     },
     "authors": [
       {
-        "name": "Assad Nazar",
-        "email": "assad.nazar@gmail.com"
+        "name": "Spaike",
+        "email": "spaike@directorscat.net"
       }
     ],
     "minimum-stability": "dev",
